@@ -6,33 +6,45 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
         if(!Array.isArray(objectToConvert)) {
             throw Error("Object is empty");
         }
+        let html = '';
         objectToConvert.forEach((item: INotionBlock) => {
-            // console.log(item);
             let tag;
             if (item.type.includes('heading')) {
-                tag = this.getHeadings(item.type);
+                tag = this.getHeadings(item);
             } else {
-                tag = this.makeTagObject(tags[item.type]);
+                tag = this.makeTagObject(tags[item.type], item);
             }
-            console.log(tag);
+
+            html += tag;    
         });
-        return 'test';
+        return html;
     }
 
     nameToTag(name: string, isEnd = false) {
         return `<${isEnd ? '/' : ''}${name}>`;
     }
+
+    wrapWithAnnotations(text: string, annotations: {[key: string]: string}) {
+        let wrapped = text;
+        for (const [key, value] of Object.entries(annotations)) {
+            if (tags[key] && value) {
+                wrapped = `${this.nameToTag(tags[key])}${wrapped}${this.nameToTag(tags[key], true)}`;
+            } else if (key === 'color' && value && value !== 'default') {
+                wrapped = `<font color="${value}">${wrapped}</font>`;
+            }
+        }
+        return wrapped;
+    }
     
-    makeTagObject(name: string) {
-        return { 
-            start: this.nameToTag(name), 
-            end: this.nameToTag(name, true)
-        };
+    makeTagObject(name: string, item: INotionBlock) {
+        const content = (item[item.type] as Partial<any>).rich_text[0].plain_text;
+        const annotations = (item[item.type] as Partial<any>).rich_text[0].annotations;
+        return `${this.nameToTag(name)}${this.wrapWithAnnotations(content, annotations)}${this.nameToTag(name, true)}`
     }
 
-    getHeadings(type: string) {
-        const headingNumber = type.split('_');
-        return this.makeTagObject(tags.heading.replace("*", headingNumber[1]));
+    getHeadings(item: INotionBlock) {
+        const headingNumber = item.type.split('_');
+        return this.makeTagObject(tags.heading.replace("*", headingNumber[1]), item);
     }
 } 
 

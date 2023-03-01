@@ -4,7 +4,8 @@ interface IConvertObjectStrategy {
 
 interface INotionBlock {
     type: string;
-    [key: string]: string;
+    // rich_text: Array<{[key: string]: string}>;
+    [key: string]: string | Partial<any>;
 }
 
 export { IConvertObjectStrategy, INotionBlock };
