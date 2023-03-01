@@ -7,7 +7,7 @@ export default class ConvertObjectContext {
         this.strategy = strategy;
     }
 
-    public convertObjectToHTML(objectToConvert: Array<INotionBlock>) {
+    public convertObjectToHTML(objectToConvert: INotionBlock[]) {
         return this.strategy.convert(objectToConvert);
     }
 }

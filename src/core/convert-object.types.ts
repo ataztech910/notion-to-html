@@ -1,10 +1,9 @@
 interface IConvertObjectStrategy {
-    convert: (objectToConvert: Array<INotionBlock>) => string;
+    convert: (objectToConvert: INotionBlock[]) => string;
 }
 
 interface INotionBlock {
     type: string;
-    // rich_text: Array<{[key: string]: string}>;
     [key: string]: string | Partial<any>;
 }
 

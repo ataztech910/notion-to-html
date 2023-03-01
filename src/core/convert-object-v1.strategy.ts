@@ -2,7 +2,7 @@ import { tags } from "./convert-object.constants";
 import { IConvertObjectStrategy, INotionBlock } from "./convert-object.types";
 
 export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
-    convert(objectToConvert: Array<INotionBlock>): string {
+    convert(objectToConvert: INotionBlock[]): string {
         if(!Array.isArray(objectToConvert)) {
             throw Error("Object is empty");
         }
