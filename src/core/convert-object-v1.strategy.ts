@@ -1,4 +1,4 @@
-import { tags } from "./convert-object.constants";
+import { NotionDataTypes, tags } from "./convert-object.constants";
 import { IConvertObjectStrategy, INotionBlock } from "./convert-object.types";
 
 export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
@@ -9,15 +9,37 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
         let html = '';
         objectToConvert.forEach((item: INotionBlock) => {
             let tag;
-            if (item.type.includes('heading')) {
+            
+            if (item.type.includes(NotionDataTypes.HEADING)) {
                 tag = this.getHeadings(item);
-            } else {
-                tag = this.makeTagObject(tags[item.type], item);
+            } else if (item.type === NotionDataTypes.BOOKMARK) {
+               tag = `<a href="${(item[item.type] as Partial<any>).url}" target="_blank">${this.iterateChildren((item[item.type] as Partial<any>).caption, (item[item.type] as Partial<any>).url)}</a>`;
+            } 
+            else {
+                tag = this.makeTagObject(tags[item.type], { 
+                    text: (item[item.type] as Partial<any>).rich_text[0].plain_text,
+                    annotations: (item[item.type] as Partial<any>).rich_text[0].annotations
+                });
             }
 
             html += tag;    
         });
         return html;
+    }
+
+    iterateChildren(children: INotionBlock[], dafaultValue = '') {;
+        let childrenHTML = dafaultValue;
+        if(Array.isArray(children) && children.length > 0) {
+            childrenHTML = '';
+            children.forEach((item: INotionBlock) => {
+                childrenHTML += this.makeTagObject(NotionDataTypes.SPAN, { 
+                    text: (item as Partial<any>).text.content,
+                    annotations: (item as Partial<any>).annotations
+                });
+            });
+        }
+
+        return childrenHTML
     }
 
     nameToTag(name: string, isEnd = false) {
@@ -36,15 +58,17 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
         return wrapped;
     }
     
-    makeTagObject(name: string, item: INotionBlock) {
-        const content = (item[item.type] as Partial<any>).rich_text[0].plain_text;
-        const annotations = (item[item.type] as Partial<any>).rich_text[0].annotations;
-        return `${this.nameToTag(name)}${this.wrapWithAnnotations(content, annotations)}${this.nameToTag(name, true)}`
+    makeTagObject(name: string, item: {text: string, annotations: Partial<any>}) {
+        return `${this.nameToTag(name)}${this.wrapWithAnnotations(item.text, item.annotations)}${this.nameToTag(name, true)}`
     }
 
     getHeadings(item: INotionBlock) {
         const headingNumber = item.type.split('_');
-        return this.makeTagObject(tags.heading.replace("*", headingNumber[1]), item);
+        return this.makeTagObject(tags.heading.replace("*", headingNumber[1]), 
+        { 
+            text: (item[item.type] as Partial<any>).rich_text[0].plain_text,
+            annotations: (item[item.type] as Partial<any>).rich_text[0].annotations
+        });
     }
 } 
 
