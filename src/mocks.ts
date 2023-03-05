@@ -309,4 +309,309 @@ const bookmark = {
     "url": "https://www.notion.so/test-659a0816910e4ba9a27ed38072b32959"
 };
 
-export const mockData = bookmark;
+const bullet_item = {
+    "results": [
+        {
+            "object": "block",
+            "id": "ce7d9b25-a81a-4fa7-b8b3-4cb5bb4f4efb",
+            "parent": {
+                "type": "page_id",
+                "page_id": "659a0816-910e-4ba9-a27e-d38072b32959"
+            },
+            "created_time": "2023-03-05T08:35:00.000Z",
+            "last_edited_time": "2023-03-05T08:36:00.000Z",
+            "created_by": {
+                "object": "user",
+                "id": "86ad25cb-5d35-467e-8570-d24c58e15d68"
+            },
+            "last_edited_by": {
+                "object": "user",
+                "id": "86ad25cb-5d35-467e-8570-d24c58e15d68"
+            },
+            "has_children": false,
+            "archived": false,
+            "type": "bulleted_list_item",
+            "bulleted_list_item": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "fir",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "fir",
+                        "href": null
+                    },
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "st dsgfdsfg ",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": true,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "st dsgfdsfg ",
+                        "href": null
+                    },
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "dvasdfa ",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": true,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "dvasdfa ",
+                        "href": null
+                    }
+                ],
+                "color": "default"
+            }
+        },
+        {
+            "object": "block",
+            "id": "3f01ecb5-c6a5-4f04-bcc6-ed02d2babe91",
+            "parent": {
+                "type": "page_id",
+                "page_id": "659a0816-910e-4ba9-a27e-d38072b32959"
+            },
+            "created_time": "2023-03-05T08:35:00.000Z",
+            "last_edited_time": "2023-03-05T08:35:00.000Z",
+            "created_by": {
+                "object": "user",
+                "id": "86ad25cb-5d35-467e-8570-d24c58e15d68"
+            },
+            "last_edited_by": {
+                "object": "user",
+                "id": "86ad25cb-5d35-467e-8570-d24c58e15d68"
+            },
+            "has_children": false,
+            "archived": false,
+            "type": "bulleted_list_item",
+            "bulleted_list_item": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "second",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "second",
+                        "href": null
+                    }
+                ],
+                "color": "default"
+            }
+        },
+        {
+            "object": "block",
+            "id": "d32c6aef-0043-4709-ba8b-a63f203ca872",
+            "parent": {
+                "type": "page_id",
+                "page_id": "659a0816-910e-4ba9-a27e-d38072b32959"
+            },
+            "created_time": "2023-03-05T08:35:00.000Z",
+            "last_edited_time": "2023-03-05T08:35:00.000Z",
+            "created_by": {
+                "object": "user",
+                "id": "86ad25cb-5d35-467e-8570-d24c58e15d68"
+            },
+            "last_edited_by": {
+                "object": "user",
+                "id": "86ad25cb-5d35-467e-8570-d24c58e15d68"
+            },
+            "has_children": false,
+            "archived": false,
+            "type": "bulleted_list_item",
+            "bulleted_list_item": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "third",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "third",
+                        "href": null
+                    }
+                ],
+                "color": "default"
+            }
+        },
+        {
+            "object": "block",
+            "id": "664a107a-2640-462a-ac65-2b4f9c549dfe",
+            "parent": {
+                "type": "page_id",
+                "page_id": "659a0816-910e-4ba9-a27e-d38072b32959"
+            },
+            "created_time": "2023-03-05T20:09:00.000Z",
+            "last_edited_time": "2023-03-05T20:09:00.000Z",
+            "created_by": {
+                "object": "user",
+                "id": "86ad25cb-5d35-467e-8570-d24c58e15d68"
+            },
+            "last_edited_by": {
+                "object": "user",
+                "id": "86ad25cb-5d35-467e-8570-d24c58e15d68"
+            },
+            "has_children": false,
+            "archived": false,
+            "type": "paragraph",
+            "paragraph": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "test test",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "test test",
+                        "href": null
+                    }
+                ],
+                "color": "default"
+            }
+        }
+    ],
+    "object": "page",
+    "id": "659a0816-910e-4ba9-a27e-d38072b32959",
+    "created_time": "2023-02-20T08:48:00.000Z",
+    "last_edited_time": "2023-03-05T20:09:00.000Z",
+    "created_by": {
+        "object": "user",
+        "id": "86ad25cb-5d35-467e-8570-d24c58e15d68"
+    },
+    "last_edited_by": {
+        "object": "user",
+        "id": "86ad25cb-5d35-467e-8570-d24c58e15d68"
+    },
+    "cover": null,
+    "icon": null,
+    "parent": {
+        "type": "database_id",
+        "database_id": "dbdb82be-8f4d-4e13-9635-2ff9b591933a"
+    },
+    "archived": false,
+    "properties": {
+        "Publish": {
+            "id": "%3F%3D%5Dc",
+            "type": "date",
+            "date": null
+        },
+        "Files & media": {
+            "id": "%3Fy%40H",
+            "type": "files",
+            "files": [
+                {
+                    "name": "9AF3EB2E-AAF7-414B-84E7-5919F1835199.jpeg",
+                    "type": "file",
+                    "file": {
+                        "url": "https://s3.us-west-2.amazonaws.com/secure.notion-static.com/ff5977f1-29b3-41ab-8dda-3910bf722677/9AF3EB2E-AAF7-414B-84E7-5919F1835199.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230305%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230305T200937Z&X-Amz-Expires=3600&X-Amz-Signature=d2b576b2a59a924a557f8de80f339db0d60b464f997b53bb22c92bc4dd1370c8&X-Amz-SignedHeaders=host&x-id=GetObject",
+                        "expiry_time": "2023-03-05T21:09:37.317Z"
+                    }
+                }
+            ]
+        },
+        "Tags": {
+            "id": "SHq%3D",
+            "type": "multi_select",
+            "multi_select": [
+                {
+                    "id": "f3e0902e-7c73-4618-8fa7-7a423620059e",
+                    "name": "Main page articles",
+                    "color": "red"
+                }
+            ]
+        },
+        "Description": {
+            "id": "Y%7Bbv",
+            "type": "rich_text",
+            "rich_text": []
+        },
+        "Created time": {
+            "id": "%5D%7DM%3C",
+            "type": "created_time",
+            "created_time": "2023-02-20T08:48:00.000Z"
+        },
+        "Status": {
+            "id": "acjl",
+            "type": "status",
+            "status": {
+                "id": "7d637a03-c9f7-43ab-96c3-776cb648a639",
+                "name": "Not started",
+                "color": "default"
+            }
+        },
+        "Title": {
+            "id": "title",
+            "type": "title",
+            "title": [
+                {
+                    "type": "text",
+                    "text": {
+                        "content": "test",
+                        "link": null
+                    },
+                    "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                    },
+                    "plain_text": "test",
+                    "href": null
+                }
+            ]
+        }
+    },
+    "url": "https://www.notion.so/test-659a0816910e4ba9a27ed38072b32959"
+};
+
+export const mockData = bullet_item;

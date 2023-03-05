@@ -7,7 +7,8 @@ enum NotionDataTypes {
     STRIKE_TROUGH = 'strikethrough',
     UNDERLINE = 'underline',
     CODE = 'code',
-    SPAN = 'span'
+    SPAN = 'span',
+    BULLET_LIST_ITEM = 'bulleted_list_item'
 }
 
 const tags: {[key: string]: string} = {

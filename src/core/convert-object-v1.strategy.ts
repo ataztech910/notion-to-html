@@ -9,9 +9,10 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
             throw Error("Object is empty");
         }
         let html = '';
-        objectToConvert.forEach((item: INotionBlock) => {
+        for(let i = 0; i < objectToConvert.length; i++) {
             let tag;
-            
+            const item = objectToConvert[i];
+
             if (item.type.includes(NotionDataTypes.HEADING)) {
                 tag = this.getHeadings(item);
             } else if (item.type === NotionDataTypes.BOOKMARK) {
@@ -20,6 +21,13 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
                         <div class="${this.makeClassName(NotionDataTypes.BOOKMARK)}__capton">${this.iterateChildren((item[item.type] as Partial<any>).caption, (item[item.type] as Partial<any>).url)}</div>
                       </div>`;
             } 
+            else if (item.type === NotionDataTypes.BULLET_LIST_ITEM) {
+                const buildList = this.buildListItem(objectToConvert, i); 
+                tag = buildList.listHtml;
+                i = buildList.indexToBreak - 1;
+                html += tag;
+                continue;
+            }
             else {
                 tag = this.makeTagObject(tags[item.type], { 
                     text: (item[item.type] as Partial<any>).rich_text[0].plain_text,
@@ -28,9 +36,29 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
                 });
             }
 
-            html += tag;    
-        });
+            html += tag;
+        }    
         return html;
+    }
+
+    buildListItem(list: INotionBlock[], index: number) {
+        let listHtml = `<ul class="${this.makeClassName(NotionDataTypes.BULLET_LIST_ITEM)}">`;
+        let indexToBreak = -1;
+        let loopCounter = 0;
+        for(let i = index; i < list.length; i++) {
+            if (list[index].type === NotionDataTypes.BULLET_LIST_ITEM) {
+                listHtml += `<li>${this.iterateChildren((list[index][list[index].type] as Partial<any>).rich_text)}</li>`;
+            } else {
+                indexToBreak = i;
+                break;
+            }
+            loopCounter = i;
+        }
+        if (indexToBreak < 0) {
+            indexToBreak = loopCounter;
+        }
+        listHtml += '</ul>';
+        return { listHtml, indexToBreak };
     }
 
     makeClassName(className: string) {
@@ -75,8 +103,7 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
     
     makeTagObject(name: string, item: {text: string, annotations: Partial<any>, href: string | null}) {
         let producedTag = `${this.nameToTag(name)}${this.wrapWithAnnotations(item.text, item.annotations)}${this.nameToTag(name, true)}`;
-        // console.log(item);
-        if (item.href !== null) {
+        if (item.href && item.href !== null) {
             producedTag = this.wrapWithLink(item.href, producedTag);
         }
         return producedTag;
