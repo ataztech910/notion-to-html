@@ -1,7 +1,9 @@
-import { NotionDataTypes, tags } from "./convert-object.constants";
+import { NotionDataTypes, tags, textConstants } from "./convert-object.constants";
 import { IConvertObjectStrategy, INotionBlock } from "./convert-object.types";
 
 export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
+    classPrefix = 'notion-to-html';
+
     convert(objectToConvert: INotionBlock[]): string {
         if(!Array.isArray(objectToConvert)) {
             throw Error("Object is empty");
@@ -13,12 +15,16 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
             if (item.type.includes(NotionDataTypes.HEADING)) {
                 tag = this.getHeadings(item);
             } else if (item.type === NotionDataTypes.BOOKMARK) {
-               tag = `<a href="${(item[item.type] as Partial<any>).url}" target="_blank">${this.iterateChildren((item[item.type] as Partial<any>).caption, (item[item.type] as Partial<any>).url)}</a>`;
+               tag = `<div class="${this.makeClassName(NotionDataTypes.BOOKMARK)}">   
+                        <a class="${this.makeClassName(NotionDataTypes.BOOKMARK)}__mainLink" href="${(item[item.type] as Partial<any>).url}" target="_blank">${textConstants[NotionDataTypes.BOOKMARK]}</a>
+                        <div class="${this.makeClassName(NotionDataTypes.BOOKMARK)}__capton">${this.iterateChildren((item[item.type] as Partial<any>).caption, (item[item.type] as Partial<any>).url)}</div>
+                      </div>`;
             } 
             else {
                 tag = this.makeTagObject(tags[item.type], { 
                     text: (item[item.type] as Partial<any>).rich_text[0].plain_text,
-                    annotations: (item[item.type] as Partial<any>).rich_text[0].annotations
+                    annotations: (item[item.type] as Partial<any>).rich_text[0].annotations,
+                    href: item.href
                 });
             }
 
@@ -27,14 +33,19 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
         return html;
     }
 
+    makeClassName(className: string) {
+        return `${this.classPrefix}-${className}`;
+    }
+
     iterateChildren(children: INotionBlock[], dafaultValue = '') {;
         let childrenHTML = dafaultValue;
         if(Array.isArray(children) && children.length > 0) {
             childrenHTML = '';
             children.forEach((item: INotionBlock) => {
                 childrenHTML += this.makeTagObject(NotionDataTypes.SPAN, { 
-                    text: (item as Partial<any>).text.content,
-                    annotations: (item as Partial<any>).annotations
+                    text: item.text.content,
+                    annotations: item.annotations,
+                    href: item.href
                 });
             });
         }
@@ -57,9 +68,18 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
         }
         return wrapped;
     }
+
+    wrapWithLink(link: string, tag: string) {
+        return `<a href="${link}" target="_blank">${tag}</a>`;
+    }
     
-    makeTagObject(name: string, item: {text: string, annotations: Partial<any>}) {
-        return `${this.nameToTag(name)}${this.wrapWithAnnotations(item.text, item.annotations)}${this.nameToTag(name, true)}`
+    makeTagObject(name: string, item: {text: string, annotations: Partial<any>, href: string | null}) {
+        let producedTag = `${this.nameToTag(name)}${this.wrapWithAnnotations(item.text, item.annotations)}${this.nameToTag(name, true)}`;
+        // console.log(item);
+        if (item.href !== null) {
+            producedTag = this.wrapWithLink(item.href, producedTag);
+        }
+        return producedTag;
     }
 
     getHeadings(item: INotionBlock) {
@@ -67,7 +87,8 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
         return this.makeTagObject(tags.heading.replace("*", headingNumber[1]), 
         { 
             text: (item[item.type] as Partial<any>).rich_text[0].plain_text,
-            annotations: (item[item.type] as Partial<any>).rich_text[0].annotations
+            annotations: (item[item.type] as Partial<any>).rich_text[0].annotations,
+            href: item.href
         });
     }
 } 

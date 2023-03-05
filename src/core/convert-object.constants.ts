@@ -21,4 +21,8 @@ const tags: {[key: string]: string} = {
     [NotionDataTypes.SPAN]: 'span'
 };
 
-export { tags, NotionDataTypes };
+const textConstants = {
+    [NotionDataTypes.BOOKMARK]: 'bookmark link'
+}
+
+export { tags, NotionDataTypes, textConstants };
