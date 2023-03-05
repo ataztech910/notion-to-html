@@ -4,7 +4,10 @@ interface IConvertObjectStrategy {
 
 interface INotionBlock {
     type: string;
-    [key: string]: string | Partial<any>;
+    text: Partial<any>,
+    annotations: Partial<any>,
+    href: string | null,
+    [key: string]: string | null | Partial<any>
 }
 
 export { IConvertObjectStrategy, INotionBlock };
