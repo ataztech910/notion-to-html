@@ -1,4 +1,4 @@
-import { NotionDataTypes, tags, textConstants } from "./convert-object.constants";
+import { backgrounds, IconTypes, NotionDataTypes, tags, textConstants } from "./convert-object.constants";
 import { IConvertObjectStrategy, INotionBlock } from "./convert-object.types";
 
 export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
@@ -20,6 +20,17 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
                         <a class="${this.makeClassName(NotionDataTypes.BOOKMARK)}__mainLink" href="${(item[item.type] as Partial<any>).url}" target="_blank">${textConstants[NotionDataTypes.BOOKMARK]}</a>
                         <div class="${this.makeClassName(NotionDataTypes.BOOKMARK)}__capton">${this.iterateChildren((item[item.type] as Partial<any>).caption, (item[item.type] as Partial<any>).url)}</div>
                       </div>`;
+            }
+            else if (item.type === NotionDataTypes.CALLOUT) {
+                const color: keyof typeof backgrounds = (item[item.type] as Partial<any>).color
+                tag = `<div class="${this.makeClassName(NotionDataTypes.CALLOUT)}" style="background: ${backgrounds[color]};">
+                        <div class="${this.makeClassName(NotionDataTypes.CALLOUT)}__icon">
+                            ${this.buildIcon((item[item.type] as Partial<any>).icon)}
+                        </div>
+                        <div class="${this.makeClassName(NotionDataTypes.CALLOUT)}__content">
+                            ${this.iterateChildren((item[item.type] as Partial<any>).rich_text)}
+                        </div>
+                       </div>`;
             } 
             else if (item.type === NotionDataTypes.BULLET_LIST_ITEM) {
                 const buildList = this.buildListItem(objectToConvert, i); 
@@ -39,6 +50,21 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
             html += tag;
         }    
         return html;
+    }
+
+    buildIcon(iconObject: {type: string, [key: string]: string | Partial<any>}) {
+        switch(iconObject.type) {
+            case IconTypes.EMOJI: 
+                return `<span>${(iconObject as Partial<any>)[iconObject.type]}</span>`;
+            case IconTypes.EXTERNAL:
+                return `<img src="${(iconObject as Partial<any>)[iconObject.type].url}" alt="Callout icon" />`;
+            case IconTypes.FILE:
+                return `<picture>
+                            <source media="(min-width:650px)" srcset="${(iconObject as Partial<any>)[iconObject.type].url}">
+                            <source media="(min-width:465px)" srcset="${(iconObject as Partial<any>)[iconObject.type].url}">
+                            <img src="${(iconObject as Partial<any>)[iconObject.type].url}" alt="Callout image" style="width:auto;">
+                        </picture>`;  
+        }
     }
 
     buildListItem(list: INotionBlock[], index: number) {
