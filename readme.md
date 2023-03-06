@@ -11,30 +11,30 @@ to use the libraray please follow the instructions
 
 At the current state we have following eleemnts covered:
 
-Bookmark - done
-Breadcrumb - will not be done
-Bulleted list item - done
-Callout - pendindg resolution
-Child database - pendindg resolution
-Child page - pendindg resolution 
-Code - pendindg resolution
-Column list and column - pendindg resolution
-Divider - pendindg resolution
-Embed - pendindg resolution
-Equation - pendindg resolution
-File - pendindg resolution
-Headings - done
-Image - pendindg resolution
-Link Preview - pendindg resolution
-Mention - pendindg resolution
-Numbered list item - pendindg resolution
-Paragraph - done 
-PDF - pendindg resolution
-Quote - pendindg resolution
-Synced block - pendindg resolution
-Table - pendindg resolution
-Table of contents - pendindg resolution
-Template - pendindg resolution
-To do - pendindg resolution
-Toggle blocks - pendindg resolution
-Video - pendindg resolution
+- Bookmark - done ✅
+- Breadcrumb - will not be done 🚫
+- Bulleted list item - done ✅
+- Callout - done ✅
+- Child database - pendindg resolution ⏳
+- Child page - pendindg resolution ⏳
+- Code - pendindg resolution ⏳
+- Column list and column - pendindg resolution ⏳
+- Divider - pendindg resolution ⏳
+- Embed - pendindg resolution ⏳
+- Equation - pendindg resolution ⏳
+- File - pendindg resolution ⏳
+- Headings - done ✅
+- Image - pendindg resolution ⏳
+- Link Preview - pendindg resolution ⏳
+- Mention - pendindg resolution ⏳
+- Numbered list item - pendindg resolution ⏳
+- Paragraph - done ✅
+- PDF - pendindg resolution ⏳
+- Quote - pendindg resolution ⏳
+- Synced block - pendindg resolution ⏳
+- Table - pendindg resolution ⏳
+- Table of contents - pendindg resolution ⏳
+- Template - pendindg resolution ⏳
+- To do - pendindg resolution ⏳
+- Toggle blocks - pendindg resolution ⏳
+- Video - pendindg resolution ⏳
