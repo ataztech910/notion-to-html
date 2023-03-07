@@ -15,9 +15,9 @@ At the current state we have following eleemnts covered:
 - Breadcrumb - will not be done 🚫
 - Bulleted list item - done ✅
 - Callout - done ✅
-- Child database - pendindg resolution ⏳
-- Child page - pendindg resolution ⏳
-- Code - pendindg resolution ⏳
+- Child database - will not be done 🚫
+- Child page - will not be done 🚫
+- Code - pendindg resolution ✅
 - Column list and column - pendindg resolution ⏳
 - Divider - pendindg resolution ⏳
 - Embed - pendindg resolution ⏳

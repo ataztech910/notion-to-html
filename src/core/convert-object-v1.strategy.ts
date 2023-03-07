@@ -31,6 +31,12 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
                             ${this.iterateChildren((item[item.type] as Partial<any>).rich_text)}
                         </div>
                        </div>`;
+            }
+            else if (item.type === NotionDataTypes.CODE) {
+                tag = `<div class="${this.makeClassName(NotionDataTypes.CODE)}">   
+                            <code class="${this.makeClassName(NotionDataTypes.CODE)}__content language-${(item[item.type] as Partial<any>).language}">${this.iterateChildren((item[item.type] as Partial<any>).rich_text)}</code>
+                            <div class="${this.makeClassName(NotionDataTypes.CODE)}__capton">${this.iterateChildren((item[item.type] as Partial<any>).caption, (item[item.type] as Partial<any>).url)}</div>
+                       </div>`;
             } 
             else if (item.type === NotionDataTypes.BULLET_LIST_ITEM) {
                 const buildList = this.buildListItem(objectToConvert, i); 
