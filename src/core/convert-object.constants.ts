@@ -9,7 +9,9 @@ enum NotionDataTypes {
     CODE = 'code',
     SPAN = 'span',
     BULLET_LIST_ITEM = 'bulleted_list_item',
-    CALLOUT = 'callout'
+    CALLOUT = 'callout',
+    DIVIDER = 'divider',
+    FILE = 'file'
 };
 
 enum IconTypes {
@@ -39,7 +41,8 @@ const tags: {[key: string]: string} = {
     [NotionDataTypes.STRIKE_TROUGH]: 's',
     [NotionDataTypes.UNDERLINE]: 'u',
     [NotionDataTypes.CODE]: 'code',
-    [NotionDataTypes.SPAN]: 'span'
+    [NotionDataTypes.SPAN]: 'span',
+    [NotionDataTypes.DIVIDER]: 'hr'
 };
 
 const textConstants = {

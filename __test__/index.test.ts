@@ -1,5 +1,8 @@
 import { NotionToHtml } from "../src/index";
-test('Notion to HTML test', () => {
+import { getFileLinkFromUrl } from "../src/utils/string-mutations";
+
+describe('Smoke Tests for the appliction', () => {
+  test('Notion to HTML test for header and pargraph', () => {
     const mockData = {
         "object": "list",
         "results": [
@@ -100,4 +103,14 @@ test('Notion to HTML test', () => {
     };
     const callToConvert = NotionToHtml(mockData, true);
     expect(callToConvert).toBe("<h2>Lacinato kale</h2><p>Lacinato kale is a variety of kale with a long tradition in Italian cuisine, especially that of Tuscany. It is also known as Tuscan kale, Italian kale, dinosaur kale, kale, flat back kale, palm tree kale, or black Tuscan palm.</p>");
+  });
+
+  test('Check regex for urls', () => {
+    const mockData = "https://s3.us-west-2.amazonaws.com/secure.notion-static.com/954fcedd-60f3-4fde-95f7-bb5ab4c7ef7a/519702322637-6079832709-Ticket.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45/20230311/us-west-2/s3/aws4_request&X-Amz-Date=20230311T192558Z&X-Amz-Expires=3600&X-Amz-Signature=cb2ca35b50c3a742b3debc3b81632ed850dc6a92004056200c7ad414a8ca69be&X-Amz-SignedHeaders=host&x-id=GetObject";
+
+    const checkUrl = getFileLinkFromUrl(mockData);
+    expect(checkUrl).toBe("519702322637-6079832709-Ticket.pdf");
+
+  })
 });
+
