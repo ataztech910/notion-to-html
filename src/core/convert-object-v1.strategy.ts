@@ -1,3 +1,4 @@
+import { getFileLinkFromUrl } from "../utils/string-mutations";
 import { backgrounds, IconTypes, NotionDataTypes, tags, textConstants } from "./convert-object.constants";
 import { IConvertObjectStrategy, INotionBlock } from "./convert-object.types";
 
@@ -31,6 +32,15 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
                             ${this.iterateChildren((item[item.type] as Partial<any>).rich_text)}
                         </div>
                        </div>`;
+            }
+            else if(item.type === NotionDataTypes.DIVIDER) {
+                tag = this.nameToTag(tags[NotionDataTypes.DIVIDER]);
+            }
+            else if(item.type === NotionDataTypes.FILE) {
+                tag = `<div class="${this.makeClassName(NotionDataTypes.FILE)}">   
+                        <a class="${this.makeClassName(NotionDataTypes.FILE)}__mainLink" href="${(item[item.type] as Partial<any>).file.url}" target="_blank">${getFileLinkFromUrl((item[item.type] as Partial<any>).file.url)}</a>
+                        <div class="${this.makeClassName(NotionDataTypes.FILE)}__capton">${this.iterateChildren((item[item.type] as Partial<any>).caption, (item[item.type] as Partial<any>).url)}</div>
+                      </div>`;
             }
             else if (item.type === NotionDataTypes.CODE) {
                 tag = `<div class="${this.makeClassName(NotionDataTypes.CODE)}">   
