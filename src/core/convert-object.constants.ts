@@ -9,9 +9,11 @@ enum NotionDataTypes {
     CODE = 'code',
     SPAN = 'span',
     BULLET_LIST_ITEM = 'bulleted_list_item',
+    NUMBERED_LIST_ITEM = 'numbered_list_item',
     CALLOUT = 'callout',
     DIVIDER = 'divider',
-    FILE = 'file'
+    FILE = 'file',
+    IMAGE = 'image'
 };
 
 enum IconTypes {

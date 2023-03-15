@@ -48,12 +48,20 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
                             <div class="${this.makeClassName(NotionDataTypes.CODE)}__capton">${this.iterateChildren((item[item.type] as Partial<any>).caption, (item[item.type] as Partial<any>).url)}</div>
                        </div>`;
             } 
-            else if (item.type === NotionDataTypes.BULLET_LIST_ITEM) {
-                const buildList = this.buildListItem(objectToConvert, i); 
+            else if (item.type === NotionDataTypes.BULLET_LIST_ITEM || item.type === NotionDataTypes.NUMBERED_LIST_ITEM) {
+                const buildList = this.buildListItem(objectToConvert, i, item.type); 
                 tag = buildList.listHtml;
-                i = buildList.indexToBreak - 1;
+                i = buildList.indexToBreak;
                 html += tag;
                 continue;
+            }
+            else if(item.type === NotionDataTypes.IMAGE) {
+                tag = `<div class="${this.makeClassName(NotionDataTypes.IMAGE)}">   
+                        <figure>
+                        <img src="${(item[item.type] as Partial<any>).file.url}" alt="iamge" style="width:100%">
+                            <figcaption>${this.iterateChildren((item[item.type] as Partial<any>).caption, (item[item.type] as Partial<any>).url)}</figcaption>
+                        </figure> 
+                      </div>`;
             }
             else {
                 tag = this.makeTagObject(tags[item.type], { 
@@ -83,23 +91,25 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
         }
     }
 
-    buildListItem(list: INotionBlock[], index: number) {
-        let listHtml = `<ul class="${this.makeClassName(NotionDataTypes.BULLET_LIST_ITEM)}">`;
+    buildListItem(list: INotionBlock[], index: number, type: string) {
+        const isNumbered = type === NotionDataTypes.NUMBERED_LIST_ITEM;
+        let listHtml = `<${!isNumbered? 'u' : 'o'}l class="${this.makeClassName(type)}">`;
         let indexToBreak = -1;
         let loopCounter = 0;
         for(let i = index; i < list.length; i++) {
-            if (list[index].type === NotionDataTypes.BULLET_LIST_ITEM) {
-                listHtml += `<li>${this.iterateChildren((list[index][list[index].type] as Partial<any>).rich_text)}</li>`;
+            if (list[i].type === type) {
+                listHtml += `<li>${this.iterateChildren((list[i][list[i].type] as Partial<any>).rich_text)}</li>`;
             } else {
                 indexToBreak = i;
                 break;
             }
+            
             loopCounter = i;
         }
         if (indexToBreak < 0) {
             indexToBreak = loopCounter;
         }
-        listHtml += '</ul>';
+        listHtml += `</${!isNumbered? 'u' : 'o'}l>`;
         return { listHtml, indexToBreak };
     }
 
