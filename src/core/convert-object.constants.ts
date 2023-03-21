@@ -10,10 +10,14 @@ enum NotionDataTypes {
     SPAN = 'span',
     BULLET_LIST_ITEM = 'bulleted_list_item',
     NUMBERED_LIST_ITEM = 'numbered_list_item',
+    TODO = 'to_do',
     CALLOUT = 'callout',
+    QUOTE = 'quote',
     DIVIDER = 'divider',
     FILE = 'file',
-    IMAGE = 'image'
+    PDF = 'pdf',
+    IMAGE = 'image',
+    VIDEO = 'video'
 };
 
 enum IconTypes {
