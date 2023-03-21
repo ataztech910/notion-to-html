@@ -29,12 +29,12 @@ At the current state we have following eleemnts covered:
 - Mention - will not be done 🚫
 - Numbered list item - done ✅
 - Paragraph - done ✅
-- PDF - pendindg resolution ⏳
-- Quote - pendindg resolution ⏳
-- Synced block - pendindg resolution ⏳
-- Table - pendindg resolution ⏳
-- Table of contents - pendindg resolution ⏳
-- Template - pendindg resolution ⏳
-- To do - pendindg resolution ⏳
-- Toggle blocks - pendindg resolution ⏳
-- Video - pendindg resolution ⏳
+- PDF - done ✅
+- Quote - done ✅
+- Synced block - it will be moved to after-release stage ⌚
+- Table - it will be moved to after-release stage ⌚
+- Table of contents - it will be moved to after-release stage ⌚
+- Template - will not be done 🚫
+- To do - done ✅
+- Toggle blocks - it will be moved to after-release stage ⌚
+- Video - it will be moved to after-release stage ⌚ (same as embed element)

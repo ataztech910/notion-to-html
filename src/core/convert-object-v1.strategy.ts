@@ -33,13 +33,22 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
                         </div>
                        </div>`;
             }
+            else if (item.type === NotionDataTypes.QUOTE) {
+                // TODO dstruct the color base to make it reusable across the project
+                const color: keyof typeof backgrounds = (item[item.type] as Partial<any>).color + '_background' as keyof typeof backgrounds;
+                tag = `<div class="${this.makeClassName(item.type)}" style="border-left: 2px solid ${backgrounds[color]}; color: ${backgrounds[color]};">
+                        <div class="${this.makeClassName(item.type)}__content">
+                            ${this.iterateChildren((item[item.type] as Partial<any>).rich_text)}
+                        </div>
+                       </div>`;
+            }
             else if(item.type === NotionDataTypes.DIVIDER) {
                 tag = this.nameToTag(tags[NotionDataTypes.DIVIDER]);
             }
-            else if(item.type === NotionDataTypes.FILE) {
-                tag = `<div class="${this.makeClassName(NotionDataTypes.FILE)}">   
-                        <a class="${this.makeClassName(NotionDataTypes.FILE)}__mainLink" href="${(item[item.type] as Partial<any>).file.url}" target="_blank">${getFileLinkFromUrl((item[item.type] as Partial<any>).file.url)}</a>
-                        <div class="${this.makeClassName(NotionDataTypes.FILE)}__capton">${this.iterateChildren((item[item.type] as Partial<any>).caption, (item[item.type] as Partial<any>).url)}</div>
+            else if(item.type === NotionDataTypes.FILE || item.type === NotionDataTypes.PDF) {
+                tag = `<div class="${this.makeClassName(item.type)}">   
+                        <a class="${this.makeClassName(item.type)}__mainLink" href="${(item[item.type] as Partial<any>).file.url}" target="_blank">${getFileLinkFromUrl((item[item.type] as Partial<any>).file.url)}</a>
+                        <div class="${this.makeClassName(item.type)}__capton">${this.iterateChildren((item[item.type] as Partial<any>).caption, (item[item.type] as Partial<any>).url)}</div>
                       </div>`;
             }
             else if (item.type === NotionDataTypes.CODE) {
@@ -48,7 +57,7 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
                             <div class="${this.makeClassName(NotionDataTypes.CODE)}__capton">${this.iterateChildren((item[item.type] as Partial<any>).caption, (item[item.type] as Partial<any>).url)}</div>
                        </div>`;
             } 
-            else if (item.type === NotionDataTypes.BULLET_LIST_ITEM || item.type === NotionDataTypes.NUMBERED_LIST_ITEM) {
+            else if (item.type === NotionDataTypes.BULLET_LIST_ITEM || item.type === NotionDataTypes.NUMBERED_LIST_ITEM || item.type === NotionDataTypes.TODO) {
                 const buildList = this.buildListItem(objectToConvert, i, item.type); 
                 tag = buildList.listHtml;
                 i = buildList.indexToBreak;
@@ -93,12 +102,17 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
 
     buildListItem(list: INotionBlock[], index: number, type: string) {
         const isNumbered = type === NotionDataTypes.NUMBERED_LIST_ITEM;
+        const isTodo = type === NotionDataTypes.TODO;
+
         let listHtml = `<${!isNumbered? 'u' : 'o'}l class="${this.makeClassName(type)}">`;
         let indexToBreak = -1;
         let loopCounter = 0;
         for(let i = index; i < list.length; i++) {
             if (list[i].type === type) {
-                listHtml += `<li>${this.iterateChildren((list[i][list[i].type] as Partial<any>).rich_text)}</li>`;
+                listHtml += `<li>
+                                ${isTodo? `<input type="checkbox" disabled ${(list[i][list[i].type] as Partial<any>).checked? 'checked' : ''} />`: ''}
+                                ${this.iterateChildren((list[i][list[i].type] as Partial<any>).rich_text)}
+                             </li>`;
             } else {
                 indexToBreak = i;
                 break;
