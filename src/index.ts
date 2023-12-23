@@ -7,6 +7,6 @@ const apiVersionStrategies: Partial<any> = {
 
 export const NotionToHtml = (responseObject: Partial<any>, isRoot: boolean, apiVersion = 'v1') => {
     const objectToRead = isRoot ? responseObject.results: responseObject;
-    const convertion = new ConvertObjectContext(apiVersionStrategies[apiVersion]);
-    return convertion.convertObjectToHTML(objectToRead);
+    const conversion = new ConvertObjectContext(apiVersionStrategies[apiVersion]);
+    return conversion.convertObjectToHTML(objectToRead);
 };
