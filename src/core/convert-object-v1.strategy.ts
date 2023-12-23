@@ -74,8 +74,8 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
             }
             else {
                 tag = this.makeTagObject(tags[item.type], { 
-                    text: (item[item.type] as Partial<any>).rich_text[0].plain_text,
-                    annotations: (item[item.type] as Partial<any>).rich_text[0].annotations,
+                    text: this.getItemFromRichText((item[item.type] as Partial<any>).rich_text, 'plain_text'),
+                    annotations: this.getItemFromRichText((item[item.type] as Partial<any>).rich_text, 'annotations'),
                     href: item.href
                 });
             }
@@ -125,6 +125,10 @@ export default class ConvertObjectStrategyV1 implements IConvertObjectStrategy {
         }
         listHtml += `</${!isNumbered? 'u' : 'o'}l>`;
         return { listHtml, indexToBreak };
+    }
+
+    getItemFromRichText(item: Partial<any>[], key: string) {
+        return item && item.length > 0 ? item[0][key] : '';
     }
 
     makeClassName(className: string) {
